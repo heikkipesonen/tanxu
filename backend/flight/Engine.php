@@ -316,6 +316,8 @@ class Engine {
             if (!$continue) break;
 
             $router->next();
+
+            $dispatched = false;
         }
 
         if (!$dispatched) {
@@ -450,7 +452,7 @@ class Engine {
         $json = ($encode) ? json_encode($data) : $data;
 
         $this->response(false)
-            ->status($code)            
+            ->status($code)
             ->header('Content-Type', 'application/json')
             ->write($json)
             ->send();

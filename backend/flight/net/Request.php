@@ -185,7 +185,6 @@ class Request {
             if ($body != '') {
                 $data = json_decode($body, true);
                 if ($data != null) {
-                    echo $data;
                     $this->data->setData($data);
                 }
             }
