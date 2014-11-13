@@ -112,9 +112,11 @@ angular
         });
       },
 
-      tanks:[]
+      tanks:[{
+        value:330
+      }]
     });
 
-    $scope.get();
+    //$scope.get();
   }])
 

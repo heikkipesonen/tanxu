@@ -8,13 +8,19 @@
  * Controller of the tankkausApp
  */
 angular.module('tankkausApp')
-  .controller('RotateCtrl', function ($scope, $element) {
+  .controller('RotateCtrl', function ($scope, $element, $timeout) {
   	angular.extend($scope, {
+  		
+  		max:150,
   		init:function(){
 
-  			$scope.r = new Rotateable($element);  			
+  			var r = new RotateButton($element[0].children[0]);	
+  			$scope.value = r.value;
+
+  			r.onupdate = function(){
+  				$scope.value = Math.round( r.value * $scope.max );  				
+  				$timeout(function(){});
+  			}
   		}
   	});
-
-  	
   });

@@ -17,11 +17,27 @@
   <body ng-app="tankkausApp" ng-controller="MainCtrl">
 
   <div id="wrapper">
-
-    <div class="header">
-      <h4>Häkä-ässä</h4>
+    <div class="view">
+      <div class="view-header"></div>
     </div>
-    
+
+    <div class="view">    
+      <div class="view-header"></div>
+
+      
+        <div rotate value="gasolina">
+          <div class="rotate-knob"></div>
+        </div>
+
+
+        <div class="pouser-level">
+          <div indicator min="0" max="330" value="gasolina"></div>
+        </div>
+      
+    </div>
+
+  <div id="dev"></div>
+<!--    
     <div class="content-wrapper">
       <div class="tank" ng-repeat="tank in tanks">
         
@@ -46,7 +62,8 @@
         </div>
 
       </div>
-    </div>   
+    </div>
+  --> 
   </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->

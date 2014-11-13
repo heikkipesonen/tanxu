@@ -6,10 +6,82 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-[rotate]{
-  border: 1px solid #d00;
-  width: 200px;
-  height: 200px;
+$rotate-size: 250px;
+.rotate-wrapper{
+  position: absolute;
+  top:50%;
+  left:50%;
+  margin-top: -$rotate-size/2;
+  margin-left: -$rotate-size/2;
+  overflow: hidden;
+  width: $rotate-size;
+  height: $rotate-size;
+
+
+  transform-style: preserve-3d;
+
+  .value{
+    position:absolute;
+    top:50%;
+    left:15%;
+    width: 70%;
+    text-align:center;
+    margin-top: -35pt;
+    font-size: 70pt;
+    font-weight: 800;
+    color: white;
+  }
+}
+
+.rotate-button{
+
+  border: 20px solid white;
+  position:absolute;
+  top:50%;
+  left:50%;
+  margin-top: -$rotate-size/2;
+  margin-left: -$rotate-size/2;
+  border-radius:50%;
+  width: $rotate-size;
+  height: $rotate-size;
+
+  .rotate-knob{
+    width: 20px;
+    height: 30px;
+    background-color:#c23b4b;
+    position: absolute;
+    top:-20px;
+    left:50%;
+    margin-left: -10px;
+  }
+}
+
+#dev{
+  position:absolute;
+  top:0px;
+  left:0px;
+  border: 1px solid black;
+}
+
+
+.view{
+  position:absolute;
+  top:0px;
+  left:0px;
+  width: 100%;
+  height: 100%;
+
+  .view-header{
+    background-color:#323232;
+    height: 72px;
+  }
+}
+
+.pouser-level{
+  position: absolute;
+  bottom: 30px;
+  width: 90%;
+  left: 5%;
 }
 
 [ng-click]{
@@ -21,10 +93,11 @@ div,p,h1,h2,h3,h4,span,input,select,ul,li,button{
   font-weight: 200;
 }
 
-#wrapper{
 
+
+#wrapper{
   font-family: "Helvetica Neue";
-  background-color: #fff;
+  background-color: #c23b4b;
   position:absolute;
   top:0px;
   left:0px;
@@ -54,6 +127,8 @@ div,p,h1,h2,h3,h4,span,input,select,ul,li,button{
     padding-top: 10px;
   }
 }
+
+
 
 input{
   width: 100%;
@@ -101,6 +176,7 @@ button{
   font-size: 14pt;
   text-align: center;
 }
+
 
 .indicator{
   position: relative;
