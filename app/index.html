@@ -2,9 +2,9 @@
 <html class="no-js">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>tanxu</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
@@ -17,53 +17,83 @@
   <body ng-app="tankkausApp" ng-controller="MainCtrl">
 
   <div id="wrapper">
-    <div class="view">
-      <div class="view-header"></div>
-    </div>
 
-    <div class="view">    
-      <div class="view-header"></div>
+
+    <div class="view view-main on-screen" ng-class="{'on-screen' : view === 'view-main'}">
+      
+      <table class="content-wrapper">
+      
+        <tr>
+          <td>
+            <div class="view-header">
+              <div class="pouser-select">
+                <button class="button-arrow arrow-left" ng-click="setPrev()"></button>
+                <h3 ng-bind="tank.name"></h3>
+                <button class="button-arrow arrow-right" ng-click="setNext()"></button>
+              </div>
+            </div>
+
+            <div class="plane-info input-section">          
+              <input type="text" ng-model="plane.register" placeholder="FUK-YEE">
+            </div>
+
+          
+            <div class="pouser" class="input-section">
+              <div class="pouser-level">
+                
+                  <div indicator min="tank.min" max="tank.max" value="tank.value" direction="vertical"></div>
+                  <span class="pouser-value">{{tank.value}}L / {{tank.max}}L</span>
+                
+              </div>
+              <div rotate value="tank.take.value" max="tank.max">
+                <div class="rotate-knob"></div>
+              </div>
+
+              
+              <input class="value" type="number"  ng-model="tank.take.value">
+            </div>
+
+
+          <div class="buttons-container">
+            <button class="small" ng-click="view = 'view-opts'">opt</button><button class="submit" ng-click="tank.takeFuel()">tank</button>
+          </div>
+
+          </td>
+        </tr>
+      </table>
+
 
       
-        <div rotate value="gasolina">
-          <div class="rotate-knob"></div>
-        </div>
-
-
-        <div class="pouser-level">
-          <div indicator min="0" max="330" value="gasolina"></div>
-        </div>
-      
     </div>
 
-  <div id="dev"></div>
-<!--    
-    <div class="content-wrapper">
-      <div class="tank" ng-repeat="tank in tanks">
-        
-        <div class="tank-title" ng-click="toggleVisible(tank)">
-          <h4 ng-bind="tank.name"></h4>
-        </div>
-
-
-        <div indicator ng-click="toggleVisible(tank)" min="tank.min" max="tank.max" value="tank.value" label="{{tank.value + 'L'}}"></div>
-
-        <div class="refill" ng-show="tank.take.visible">
-          <form action="" ng-submit="takeFuel(tank)">
-            <input type="text" placeholder="FUK-YEE" ng-model="tank.take.register">
-            <input type="number" placeholder="Liters" ng-model="tank.take.value">
-
-            <button type="submit">lori lori</button>            
-          </form>
-
-
-          <button class="alert" ng-click="fill(tank)">paa täyteen taas</button>
-
-        </div>
-
-      </div>
+    <div class="view view-opts" ng-class="{'on-screen' : view === 'view-opts'}">
+      <table class="content-wrapper">
+        <tr>
+          <td>
+              <div class="pouser-select" ng-click="view = 'view-main'">
+                <button class="button-arrow arrow-left arrow-up"></button>
+                <h3 ng-bind="tank.name"></h3>                
+              </div>
+                 
+            <button ng-click="getLog()">log</button>
+             <!-- 
+            <table class="log">
+              <tr ng-repeat="row in log">
+                <td ng-bind="eventType[row.type]"></td>
+                <td ng-bind="row.value"></td>
+                <td ng-bind="row.message"></td>
+                <td ng-bind="row.timestamp | date : 'dd.MM.yyyy'"></td>
+              </tr>
+            </table>
+-->
+            <button ng-click="fill()">refill</button>
+          </td>
+        </tr>
+      </table>
     </div>
-  --> 
+
+
+
   </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -91,6 +121,7 @@
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -100,6 +131,9 @@
         <script src="scripts/directives/rotate.js"></script>
         <script src="scripts/controllers/rotate.js"></script>
         <script src="scripts/directives/indicator.js"></script>
+        <script src="scripts/services/tank.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/services/plane.js"></script>
         <!-- endbuild -->
 </body>
 </html>

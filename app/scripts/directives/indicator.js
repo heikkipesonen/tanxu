@@ -13,15 +13,17 @@ angular.module('tankkausApp')
     		value:'=',
     		max:'=',
     		min:'=',
+        direction:'@?',
     		label:'@'
     	},
-      template: '<div class="indicator"><div class="indicator-bar" ng-style="style"></div><span class="indicator-value" ng-bind="label"></span></div>',
+      template: '<div class="indicator" ng-class="direction"><div class="indicator-bar" ng-style="style"></div><span class="indicator-value" ng-bind="label"></span></div>',
       restrict: 'A',
       replace:true,
       controller:['$scope',function($scope){
       	angular.extend($scope, {      		
       		style:{
-      			width:'50%'
+            height:'100%',
+      			width:'100%'
       		},
 
 
@@ -30,8 +32,15 @@ angular.module('tankkausApp')
       			var ratio = $scope.value/range;
       			var percent = ratio*100;
       			
-      			percent = percent < 0 ? 0 : percent;
-      			$scope.style.width = percent +'%';
+      			percent = percent < 0 ? 0 : percent < 100 ? percent : 100;
+      			
+            if ($scope.direction === 'vertical'){
+              $scope.style.height = percent +'%';
+              $scope.style.width = '100%';
+            } else {
+              $scope.style.width = percent +'%';
+              $scope.style.height = '100%';
+            }
       			
       		}
       	});

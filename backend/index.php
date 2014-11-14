@@ -2,12 +2,14 @@
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   // return only the headers and not the content
   // only allow CORS if we're doing a GET - i.e. no saving for now.
-  if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']) && $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'] == 'GET') {
+  //if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']) && $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'] == 'GET') {
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, User, Password');
-  }
+  //}
   exit;
 }
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, User, Password');
 
 
 require_once('ORM.php');
@@ -25,34 +27,13 @@ function getRequest(){
 }
 
 
-function getKey($key, $data){
-	if (isset($data[$key])){
-		return $data[$key];
-	}
 
-	return null;
-}
-
-function as_array($results){
-	$r = array();
-
-	foreach ($results as $result) {
-		$r[] = $result->as_array();
-	}
-
-	return $r;
-}
-
-function existsInDatabase($table, $key, $value){
-	return is_object( ORM::for_table($table)->where($key, $value)->find_one() );
-}
-
-
-function addLog($type, $value, $message){
+function addLog($type, $value, $message, $tank){
 	$log = ORM::for_table('tank_log')->create();
 	$log->type = $type;
 	$log->value = $value;
 	$log->message = $message;
+	$log->tank = $tank;
 	$log->save();
 }
 
@@ -80,7 +61,7 @@ Flight::route('POST /take/@id', function($id){
 
 	if (is_object($tank)){
 		
-		if (is_numeric($d['value']) && !empty($d['value']) && is_string($d['register']) && !empty($d['register'])){
+		if (isset($d['value']) && isset($d['register']) && is_numeric($d['value']) && !empty($d['value']) && is_string($d['register']) && !empty($d['register'])){
 			
 			
 			$fuelLeft = $tank->value - $d['value'];
@@ -90,7 +71,7 @@ Flight::route('POST /take/@id', function($id){
 			$tank->value = $fuelLeft;
 
 			if ($diff > 0){
-				addLog(1, $diff, $d['register']);
+				addLog(1, $diff, $d['register'], $id);
 				$tank->save();				
 			}
 		}
@@ -107,12 +88,32 @@ Flight::route('POST /fill/@id', function($id){
 	$diff = $tank->max - $tank->value;
 	$tank->value = $tank->max;
 
-	addLog(0, $diff, 0);
+	addLog(0, $diff, 0, $id);
 	
 	$tank->save();
 
 	Flight::json($tank->as_array());
 });
 
+
+Flight::route('GET /log/@id', function($id){
+	$log = ORM::for_table('tank_log')
+		->where('tank', $id)
+		->select_many(array('timestamp','type','value','message'))
+		->order_by_desc('timestamp')
+		->limit(20)
+		->find_array();
+
+	$result = array();
+	if (count($log) > 0){
+		foreach ($log as $logItem) {
+			$t = strtotime($logItem['timestamp'])*1000;
+			$logItem['timestamp'] = $t;
+			$result[] = $logItem;
+		}
+	}
+
+	Flight::json($result);
+});
 
 Flight::start();

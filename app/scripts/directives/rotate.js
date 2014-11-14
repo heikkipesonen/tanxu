@@ -11,10 +11,11 @@ angular.module('tankkausApp')
     return {
     	replace:true,
       scope:{
+        max:'=',
         value:'='
       },
     	controller:'RotateCtrl',
-    	template: '<div class="rotate-wrapper"><div class="rotate-button" ng-transclude></div><h2 class="value" ng-bind="value"></h2></div>',
+    	template: '<div class="rotate-wrapper"><div class="rotate-button" ng-transclude></div></div>',
       restrict: 'A',
       transclude:true,
       link: function postLink($scope) {        

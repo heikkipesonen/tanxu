@@ -67,6 +67,12 @@ function RotateButton(element, opts){
 	this.value = 0;
 	this.rotation = 0;
 	this.last_rotation = 0;
+	
+	this.last_update = 0;
+	this.options={		
+		stepsize:0.1
+	};
+
 	this.init();
 }
 
@@ -76,6 +82,10 @@ RotateButton.prototype = {
 		this.dragging = false;
 		this._touch = new TouchEventHandler();
 		this._handleTouchStart = function(evt){
+			evt.stopPropagation();
+			evt.preventDefault();
+
+			this.position = this.element.getBoundingClientRect();
 			document.addEventListener('mousemove', this._handleTouchMove );
 			document.addEventListener('mouseup', this._handleTouchEnd );
 			document.addEventListener('touchmove', this._handleTouchMove );
@@ -104,9 +114,7 @@ RotateButton.prototype = {
 			document.removeEventListener('touchmove', this._handleTouchMove );
 			document.removeEventListener('touchend', this._handleTouchEnd );
 		}.bind(this);
-
-
-		this.position = this.element.getBoundingClientRect();
+		
 
 		this.element.addEventListener('mousedown', this._handleTouchStart );
 		this.element.addEventListener('touchstart', this._handleTouchStart );
@@ -132,7 +140,7 @@ RotateButton.prototype = {
 		return da;		
 	},
 
-	onupdate:function(){
+	onUpdate:function(){
 
 	},
 
@@ -140,20 +148,26 @@ RotateButton.prototype = {
 		var da = this.getAngle();
 		var step = da - this.last_rotation;
 		
-		var l_angle = this.rotation/Math.PI/2;
-		
 		this.rotation += step;
 
-		if (step !== 0){
-			this.onupdate();
+		var stepSize = this.options.stepsize;
+		var updateDiff = da - this.last_update;
+		var direction = step > 0 ? 1 : -1;
+		
+		if ( Math.abs(updateDiff) >= stepSize){
+			this.onUpdate(direction);
+			this.last_update = da;
+			this.value += direction;
+
 		}
-				
+
+/*
 		var angle = this.rotation/Math.PI/2;
+		var l_angle = this.rotation/Math.PI/2;		
 		if (angle < 0) angle += 1;
 		if (l_angle < 0) l_angle += 1;
 		this.value = angle;
 		
-/*
 		var diff = angle - l_angle;
 		if (diff > 0.9){
 			diff = 1-diff;
@@ -165,10 +179,11 @@ RotateButton.prototype = {
 
 		this.value += diff;
 
+		e.innerHTML = 'st:'+ stepSize +'<br/>sd:'+updateDiff+'<br/>angle:' + this.rotation + '<br/> val' + this.value;		
 	*/
-		e.innerHTML = 'val:'+ this.value +'<br/>df:'+'<br/>angle:' + angle + '<br/> step' + step;		
+		
 		this.last_rotation = da;
 		this.setStyle();
 	},
 };
-		var e = document.getElementById('dev');	
+//var e = document.getElementById('dev');	
