@@ -15,6 +15,7 @@ angular.module('tankkausApp')
       view:'view-main',
       tank:false,
       plane:planeService,
+      loading:false,      
       eventType:{
       	'0':'Täyttö',
       	'1':'Tankkaus'
@@ -40,7 +41,9 @@ angular.module('tankkausApp')
       fill:function(){
         var confirm = window.confirm('Täytä pouseri '+$scope.tank.name + '?');
         if (confirm){
+        	$scope.loading = true;
           $scope.tank.fill().then(function(response){
+          	$scope.loading = false;
             if (response === false){
               alert('Ei täytetty, ku ei onnistunu :(');
             } else {
@@ -49,13 +52,32 @@ angular.module('tankkausApp')
           });
         }        
       },
+  		
   		getLog:function(){
   			$scope.tank.getLog();
   		},
 
+  		takeFuel:function(){
+        if ($scope.tank && planeService.register && $scope.tank.take.value){
+  				$scope.loading = true;
+  				
+  				$scope.tank.takeFuel().then(function(response){
+  					$scope.loading = false;
+  					if (response === false){
+ 							alert('Ei tankattu ku ei onnistununna :(');
+  					}
+  				});
+
+        } else {
+          alert('Pitäs laittaa rek nro ja tankattu määrä. kuitenni..');
+        }
+  		},
+
       get:function(){
+      	$scope.loading = true;
         $http.get(API_URL+'/tank').then(function(response){
-          $scope.tanks = [];          
+          $scope.tanks = [];
+          $scope.loading = false;        
 
           angular.forEach(response.data, function(tank){
             $scope.tanks.push( new Tank(tank) );
@@ -70,6 +92,7 @@ angular.module('tankkausApp')
 
 
         },function(){
+        	$scope.loading = false;
             alert('Ei saatu dataa. :(');
         });
       }

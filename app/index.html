@@ -18,6 +18,14 @@
   </head>
   <body ng-app="tankkausApp" ng-controller="MainCtrl">
 
+  <div class="loading-overlay" ng-show="loading">
+    <table>
+    <tr><td>
+      <h3>Lattaillaan..</h3>
+    </td></tr>
+    </table>
+  </div>
+
   <div id="wrapper">
 
 
@@ -54,7 +62,7 @@
 
 
           
-            <button class="submit" ng-click="tank.takeFuel()">tank</button>
+            <button class="submit" ng-click="takeFuel()">tank</button>
           
       </div>
 
@@ -89,8 +97,6 @@
       </div>
     </div>
 
-
-
   </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -114,6 +120,7 @@
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
@@ -131,6 +138,7 @@
         <script src="scripts/services/tank.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/services/plane.js"></script>
+        <script src="scripts/directives/fullheight.js"></script>
         <!-- endbuild -->
 </body>
 </html>

@@ -96,12 +96,17 @@ Flight::route('POST /fill/@id', function($id){
 });
 
 
-Flight::route('GET /log/@id', function($id){
+Flight::route('GET /log/@id(/@offset/@limit)', function($id ,$offset, $limit){
+
+	if ($offset < 0) $offset = 0;
+	if ($limit < 0) $limit = 20;
+
 	$log = ORM::for_table('tank_log')
 		->where('tank', $id)
 		->select_many(array('timestamp','type','value','message'))
 		->order_by_desc('timestamp')
-		->limit(20)
+		->offset($offset)
+		->limit($limit)
 		->find_array();
 
 	$result = array();

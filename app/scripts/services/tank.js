@@ -64,13 +64,7 @@ angular.module('tankkausApp')
       },
       takeFuel:function(){
         var me = this;
-        if (this.busy) return;
-        this.busy = true;
 
-        if (!planeService.register || !this.take.value){
-          alert('Pitäs laittaa rek nro ja tankattu määrä. kuitenni..');
-          return;
-        }
 
         return $http.post(API_URL+'/take/'+this.id, {value:this.take.value, register:planeService.register})
           .then(function(response){
@@ -83,7 +77,7 @@ angular.module('tankkausApp')
 
             return true;
           }, function(response){
-            alert('Ei tankattu ku ei onnistununna :(');
+           
 
             me.busy = false;
             return false;

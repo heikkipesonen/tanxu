@@ -70,7 +70,7 @@ function RotateButton(element, opts){
 	this.position = {
 		top:0,
 		left:0,
-		widt:0,
+		width:0,
 		height:0
 	}
 	
@@ -84,24 +84,25 @@ function RotateButton(element, opts){
 
 RotateButton.prototype = {
 	getPosition:function(){
+		 
+
 			var element = this.element;
 	    var xPosition = 0;
 	    var yPosition = 0;
 	  
 	    while(element) {
-	        xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
-	        yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+	        xPosition += element.offsetLeft;
+	        yPosition += element.offsetTop;
 	        element = element.offsetParent;
 	    }
 	    
-	    var rect = this.element.getBoundingClientRect();
+	    
 
 	    this.position.top = yPosition;
 	    this.position.left = xPosition;
 	    this.position.width = 220;
 	    this.position.height = 220;
 
-	    console.log(this.position)
 
 
 	    return { x: xPosition, y: yPosition };
@@ -166,9 +167,8 @@ RotateButton.prototype = {
 	getAngle:function(){
 		var cy = this.position.top + this.position.height/2;
 		var cx = this.position.left + this.position.width/2;
-
-		var dx = this._touch.position.x - cx;
-		var dy = this._touch.position.y - cy;
+		var dx = cx - this._touch.position.x;
+		var dy = cy - this._touch.position.y;
 
 		var da = Math.atan2(dy,dx);
 		return da;		
@@ -220,4 +220,9 @@ RotateButton.prototype = {
 		this.setStyle();
 	},
 };
-//var e = document.getElementById('dev');	
+
+var e = document.getElementById('dev');	
+function dev(cx,cy){
+	e.style.left = cx + 'px';
+	e.style.top = cy+'px';
+}
