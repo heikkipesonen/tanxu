@@ -17,17 +17,56 @@ div,p,h1,h2,h3,h4,span,input,select,ul,li,button{
   font-weight: 200;
   color: white;
 }
-
+//c23b4b
+$bg-color: #1D1F2C;
+//$bg-color: #c23b4b;
 $rotate-size: 220px;
+body{
+  background-color: $bg-color;
+}
+
+#wrapper{
+  font-family: "Helvetica Neue";
+  position:relative;
+  width: 100%;
+  min-height: 100%;
+  margin:auto;
+  max-width: 320px;
+
+  .content-wrapper{
+    max-width: 320px;
+    position: relative;
+    margin: auto;
+    width: 95%; 
+  }  
+}
+
+.content-wrapper{
+  position: absolute;
+  top:0px;
+  left:0px;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+
+  td{
+    vertical-align: middle;
+  }
+}
 
 .view{
-  position:absolute;
-  top:-100%;
-  left:0px;
-  width: 100%;
-  height: 100%;
+  position:relative;
+  margin:auto;
+  width: 90%;
+  text-align: center;
+
 
   transition: all 0.5s;
+
+  .view-section{
+    padding-top:25px;
+    padding-bottom:25px;
+  }
 
   &.on-screen{
     top:0;
@@ -72,9 +111,24 @@ h3{
   margin-bottom: 15px;
   width: 90%;
 
-  font-weight: 800;
+  font-size: 10pt;
+  text-align: left;
+  font-weight: 200;
+  
   text-transform: uppercase; 
+
+  td{
+    padding:5px 3px 5px 3px;
+
+  }
+  
+  tr{
+    &:nth-child(even){
+      background-color: rgba(255,255,255,0.3);
+    }
+  }
 }
+
 
 .pouser-select{
   position: relative;
@@ -175,11 +229,14 @@ h3{
 input.value{
   position:absolute;
   top:50%;
-  left:19%;
+  left:15%;
   width: 70%;
-  text-align:center;
-  margin-top: -34pt;
-  font-size: 50pt;
+  overflow: visible;
+  background-color: transparent !important;
+  border:none !important;
+  text-align:center !important;
+  margin-top: -25pt;
+  font-size: 40pt;
   font-weight: 800;
   color: white;
   opacity:1;
@@ -215,7 +272,7 @@ input.value{
   .rotate-knob{
     width: 5px;
     height: 28px;
-    background-color:#c23b4b;
+    background-color:$bg-color;
     position: absolute;
     top:-27px;
     left:50%;
@@ -232,40 +289,6 @@ input.value{
 
 
 
-
-
-#wrapper{
-  font-family: "Helvetica Neue";
-  background-color: #c23b4b;
-  position:absolute;
-  top:0px;
-  left:0px;
-  width: 100%;
-  min-height: 100%;
-  overflow: hidden;
-
-  .content-wrapper{
-    max-width: 320px;
-    position: relative;
-    margin: auto;
-    width: 95%; 
-  }  
-}
-
-.content-wrapper{
-  position: absolute;
-  top:0px;
-  left:0px;
-  height: 100%;
-  width: 100%;
-  text-align: center;
-
-  td{
-    vertical-align: middle;
-  }
-}
-
-
 input{
   margin:auto;
   width: $rotate-size;
@@ -274,7 +297,7 @@ input{
   text-transform: uppercase;
   background-color:transparent;
 
-  font-size: 35pt;
+  font-size: 30pt;
   font-weight: 800;
   color: white;
   border-bottom: 1px dashed white;
@@ -310,7 +333,7 @@ button{
   margin-top: 15px;
   color: white;
   font-weight: 800;
-  color: #c23b4b;
+  color: $bg-color;
   display:inline-block;
 
   &.small{
@@ -361,5 +384,17 @@ button{
     margin-top: -15pt;
     font-size: 30pt;
     color: black;    
+  }
+}
+
+
+@media all and (min-height: 520px){
+  .pouser{  
+    margin-top: 30px;
+    margin-bottom: 40px;
+  }
+
+  .plane-info{
+    margin-top: 25px;
   }
 }

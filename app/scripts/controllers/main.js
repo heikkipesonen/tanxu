@@ -50,11 +50,7 @@ angular.module('tankkausApp')
         }        
       },
   		getLog:function(){
-  			$http.get(API_URL+'/log/'+$scope.tank.id).then(function(response){
-  				$scope.log = response.data;
-  			}, function(){
-  				alert('Logia ei nyt sitten saatu haettua..');
-  			});
+  			$scope.tank.getLog();
   		},
 
       get:function(){

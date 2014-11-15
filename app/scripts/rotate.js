@@ -12,7 +12,7 @@ function TouchEventHandler(){
 }
 
 TouchEventHandler.prototype = {
-	getPointerPosition:function(evt){
+	getPointerPosition:function(evt){	
 		if (!evt.touches){
 			return {x:evt.pageX,y:evt.pageY,t:evt.timeStamp};
 		} else {
@@ -67,6 +67,12 @@ function RotateButton(element, opts){
 	this.value = 0;
 	this.rotation = 0;
 	this.last_rotation = 0;
+	this.position = {
+		top:0,
+		left:0,
+		widt:0,
+		height:0
+	}
 	
 	this.last_update = 0;
 	this.options={		
@@ -77,15 +83,43 @@ function RotateButton(element, opts){
 }
 
 RotateButton.prototype = {
+	getPosition:function(){
+			var element = this.element;
+	    var xPosition = 0;
+	    var yPosition = 0;
+	  
+	    while(element) {
+	        xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+	        yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+	        element = element.offsetParent;
+	    }
+	    
+	    var rect = this.element.getBoundingClientRect();
+
+	    this.position.top = yPosition;
+	    this.position.left = xPosition;
+	    this.position.width = 220;
+	    this.position.height = 220;
+
+	    console.log(this.position)
+
+
+	    return { x: xPosition, y: yPosition };
+	},
 	init:function(){
+
+		function getPosition(element) {
+		}
 		
 		this.dragging = false;
 		this._touch = new TouchEventHandler();
 		this._handleTouchStart = function(evt){
 			evt.stopPropagation();
 			evt.preventDefault();
+			
+			this.getPosition();		
+			
 
-			this.position = this.element.getBoundingClientRect();
 			document.addEventListener('mousemove', this._handleTouchMove );
 			document.addEventListener('mouseup', this._handleTouchEnd );
 			document.addEventListener('touchmove', this._handleTouchMove );
@@ -149,11 +183,11 @@ RotateButton.prototype = {
 		var step = da - this.last_rotation;
 		
 		this.rotation += step;
-
 		var stepSize = this.options.stepsize;
 		var updateDiff = da - this.last_update;
 		var direction = step > 0 ? 1 : -1;
 		
+
 		if ( Math.abs(updateDiff) >= stepSize){
 			this.onUpdate(direction);
 			this.last_update = da;

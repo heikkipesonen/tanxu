@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <title>tanxu</title>
     <meta name="description" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
@@ -21,10 +23,7 @@
 
     <div class="view view-main on-screen" ng-class="{'on-screen' : view === 'view-main'}">
       
-      <table class="content-wrapper">
-      
-        <tr>
-          <td>
+      <div class="view-section">
             <div class="view-header">
               <div class="pouser-select">
                 <button class="button-arrow arrow-left" ng-click="setPrev()"></button>
@@ -45,51 +44,49 @@
                   <span class="pouser-value">{{tank.value}}L / {{tank.max}}L</span>
                 
               </div>
-              <div rotate value="tank.take.value" max="tank.max">
+              <div rotate value="tank.take.value" max="tank.value">
                 <div class="rotate-knob"></div>
               </div>
 
               
-              <input class="value" type="number"  ng-model="tank.take.value">
+              <input class="value" pattern="\d*" type="text"  ng-model="tank.take.value">
             </div>
 
 
-          <div class="buttons-container">
-            <button class="small" ng-click="view = 'view-opts'">opt</button><button class="submit" ng-click="tank.takeFuel()">tank</button>
-          </div>
+          
+            <button class="submit" ng-click="tank.takeFuel()">tank</button>
+          
+      </div>
 
-          </td>
-        </tr>
-      </table>
+      <div class="view-section">
 
-
-      
-    </div>
-
-    <div class="view view-opts" ng-class="{'on-screen' : view === 'view-opts'}">
-      <table class="content-wrapper">
-        <tr>
-          <td>
-              <div class="pouser-select" ng-click="view = 'view-main'">
-                <button class="button-arrow arrow-left arrow-up"></button>
-                <h3 ng-bind="tank.name"></h3>                
-              </div>
-                 
-            <button ng-click="getLog()">log</button>
-             <!-- 
+                
+            <div class="view-header">
+              <h3>log</h3>
+            </div>
+             
             <table class="log">
-              <tr ng-repeat="row in log">
+            <tr>
+              <th></th>
+              <th>L</th>
+              <th>rek</th>
+              <th>date</th>
+            </tr>
+              <tr ng-repeat="row in tank.log">
                 <td ng-bind="eventType[row.type]"></td>
                 <td ng-bind="row.value"></td>
                 <td ng-bind="row.message"></td>
-                <td ng-bind="row.timestamp | date : 'dd.MM.yyyy'"></td>
+                <td ng-bind="row.timestamp | date : 'hh:mm / dd.MM.yy'"></td>
               </tr>
             </table>
--->
+
+            <div class="view-header">
+              <h3>admin</h3>
+            </div>
+
+
             <button ng-click="fill()">refill</button>
-          </td>
-        </tr>
-      </table>
+      </div>
     </div>
 
 
