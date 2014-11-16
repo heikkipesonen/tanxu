@@ -40,8 +40,10 @@
               </div>
             </div>
 
-            <div class="plane-info input-section">          
+            <div class="plane-info input-section">
+              <button class="button-arrow arrow-left" ng-click="prevPlane()"></button>       
               <input type="text" ng-model="plane.register" placeholder="FUK-YEE">
+              <button class="button-arrow arrow-right" ng-click="nextPlane()"></button>
             </div>
 
           
@@ -84,7 +86,7 @@
                 <td ng-bind="eventType[row.type]"></td>
                 <td ng-bind="row.value"></td>
                 <td ng-bind="row.message"></td>
-                <td ng-bind="row.timestamp | date : 'hh:mm / dd.MM.yy'"></td>
+                <td ng-bind="row.timestamp | date : 'hh:mm dd.MM.yy'"></td>
               </tr>
             </table>
 

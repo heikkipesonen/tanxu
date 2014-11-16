@@ -117,6 +117,10 @@ h3{
   
   text-transform: uppercase; 
 
+  th{
+    text-align: center;    
+  }
+
   td{
     padding:5px 3px 5px 3px;
 
@@ -143,31 +147,30 @@ h3{
     overflow: hidden;
 
   }
+}
 
+.button-arrow{
+  $button-size : 35px;
+  width: $button-size;
+  height: $button-size;
+  position:absolute;
+  top:50%;
+  margin-top: -$button-size/2 - 7.5px;
+  background-size: 100% 100%;
+  background-color: transparent;
 
-  button{
-    $button-size : 35px;
-    width: $button-size;
-    height: $button-size;
-    position:absolute;
-    top:50%;
-    margin-top: -$button-size/2 - 7.5px;
-    background-size: 100% 100%;
-    background-color: transparent;
+  &.arrow-left{
+    left:0px;
+    background-image: url('../images/arrow-left.png');
+  }
 
-    &.arrow-left{
-      left:0px;
-      background-image: url('../images/arrow-left.png');
-    }
+  &.arrow-right{
+    right:0px;
+    background-image: url('../images/arrow-right.png');
+  }
 
-    &.arrow-right{
-      right:0px;
-      background-image: url('../images/arrow-right.png');
-    }
-
-    &.arrow-up{      
-      background-image: url('../images/arrow-up.png');
-    }
+  &.arrow-up{      
+    background-image: url('../images/arrow-up.png');
   }
 }
 
@@ -419,7 +422,10 @@ button{
 }
 
 .plane-info{
+  position: relative;
   margin-top: 10px;
+
+
 }
 
 @media all and (min-height: 520px){

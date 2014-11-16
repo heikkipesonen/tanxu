@@ -18,8 +18,9 @@ angular.module('tankkausApp')
       loading:false,      
       eventType:{
       	'0':'Täyttö',
-      	'1':'Tankkaus'
+      	'1':'Tank.'
      	},
+
       set:function(index){
         $scope.tank = $scope.tanks[index];
         $timeout(function(){});
@@ -36,6 +37,14 @@ angular.module('tankkausApp')
       	var current = $scope.tanks.indexOf($scope.tank);
       	var prev = current  > 0 ? current-1 : $scope.tanks.length-1;
       	$scope.set(prev);
+      },
+
+      nextPlane:function(){
+        planeService.next();
+      },
+
+      prevPlane:function(){
+        planeService.prev();
       },
 
       fill:function(){
