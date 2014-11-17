@@ -16,4 +16,4 @@ angular
     'LocalStorageModule'
   ])
 
-  .constant('API_URL', 'http://www.heikkipesonen.fi/fantsutanxu/backend');
+  .constant('API_URL', 'backend');
